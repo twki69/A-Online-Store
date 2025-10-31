@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Shop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ["Inter", "ui-sans-serif", "system-ui"] },
+          colors: { primary: { DEFAULT: '#2563eb', dark: '#1e40af' }, accent: '#f59e0b' }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans text-slate-800 bg-slate-50 dark:text-slate-100 dark:bg-slate-900">
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 bg-white border-b border-slate-200 dark:bg-slate-900 dark:border-slate-800 shadow-md">
+    <nav class="container mx-auto px-4 md:px-6">
+      <div class="flex items-center justify-between h-20">
+        <a href="#home" class="flex items-center gap-3">
+          <span class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white font-bold text-xl">S</span>
+          <span class="text-xl md:text-2xl font-extrabold tracking-tight">Smart Shop</span>
+        </a>
+        <button id="navToggle" class="md:hidden p-2 rounded hover:bg-slate-100" aria-label="Toggle Menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <ul id="navMenu" class="hidden md:flex items-center gap-8">
+          <li><a data-link href="#home" class="py-5 text-lg border-b-2 border-transparent text-slate-700 hover:text-primary hover:border-primary">Home</a></li>
+          <li><a data-link href="#products" class="py-5 text-lg border-b-2 border-transparent text-slate-700 hover:text-primary hover:border-primary">Products</a></li>
+          <li><a data-link href="#reviews" class="py-5 text-lg border-b-2 border-transparent text-slate-700 hover:text-primary hover:border-primary">Reviews</a></li>
+          <li><a data-link href="#about" class="py-5 text-lg border-b-2 border-transparent text-slate-700 hover:text-primary hover:border-primary">About</a></li>
+          <li><a data-link href="#contact" class="py-5 text-lg border-b-2 border-transparent text-slate-700 hover:text-primary hover:border-primary">Contact</a></li>
+          <li class="hidden lg:block">
+            <div class="flex items-center gap-2 text-sm">
+              <span class="px-2 py-1 rounded-lg bg-slate-100">Balance: <span id="balanceAmount" class="font-semibold">$0.00</span></span>
+              <button id="addMoney" class="px-2 py-1 rounded-lg border hover:bg-slate-50">+1000</button>
+            </div>
+          </li>
+          <li>
+            <button id="themeToggle" class="px-3 py-2 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-800" aria-label="Toggle Theme">Dark</button>
+          </li>
+          <li>
+            <button id="openCart" class="relative inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-primary text-white hover:bg-primary/90">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2Zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2ZM7.16 14h9.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49a1 1 0 0 0-.87-1.48H6.21l-.94-2H1v2h2l3.6 7.59-1.35 2.45A2.01 2.01 0 0 0 5 18h14v-2H5l1.16-2Z"/></svg>
+              <span id="cartCount" class="absolute -top-1 -right-1 min-w-[18px] h-[18px] text-xs px-1 rounded-full bg-accent text-white text-center">0</span>
+              <span class="hidden sm:inline">Cart</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <ul id="mobileMenu" class="md:hidden hidden flex-col gap-2 pb-3">
+        <li><a data-link href="#home" class="block px-3 py-3 rounded hover:bg-slate-100">Home</a></li>
+        <li><a data-link href="#products" class="block px-3 py-3 rounded hover:bg-slate-100">Products</a></li>
+        <li><a data-link href="#reviews" class="block px-3 py-3 rounded hover:bg-slate-100">Reviews</a></li>
+        <li><a data-link href="#about" class="block px-3 py-3 rounded hover:bg-slate-100">About</a></li>
+        <li><a data-link href="#contact" class="block px-3 py-3 rounded hover:bg-slate-100">Contact</a></li>
+        <li class="px-2">
+          <div class="mt-1 flex items-center gap-2 text-sm">
+            <span class="px-2 py-1 rounded-lg bg-slate-100">Balance: <span id="balanceAmountMobile" class="font-semibold">$0.00</span></span>
+            <button id="addMoneyMobile" class="px-2 py-1 rounded-lg border hover:bg-slate-50">+1000</button>
+          </div>
+        </li>
+        <li class="px-2">
+          <button id="themeToggleMobile" class="w-full mt-1 px-2 py-2 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-800">Toggle Dark</button>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero / Slider -->
+  <section id="home" class="bg-white dark:bg-slate-900">
+    <div class="container mx-auto px-4 py-12 md:py-20 min-h-[calc(100vh-5rem)] flex items-center">
+      <div class="grid md:grid-cols-2 gap-6 md:gap-8 items-stretch w-full">
+        <div class="self-center">
+          <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">Shop smart. Save more.</h1>
+          <p class="mt-3 text-slate-600">Discover curated products at unbeatable prices. Fast delivery, easy returns, and secure checkout.</p>
+          <div class="mt-5 flex gap-3">
+            <a href="#products" class="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-primary text-white hover:bg-primary/90">Browse Products</a>
+            <a href="#reviews" class="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-slate-300 hover:bg-slate-100">See Reviews</a>
+          </div>
+        </div>
+        <div>
+          <div class="relative overflow-hidden rounded-xl shadow-lg h-full">
+            <div id="slider" class="relative h-96 md:h-[34rem]">
+              <img class="slider-img absolute inset-0 w-full h-full object-cover opacity-100" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='https://picsum.photos/seed/ss1/1600/900';" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1600&auto=format&fit=crop" alt="Promo 1">
+              <img class="slider-img absolute inset-0 w-full h-full object-cover opacity-0" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='https://picsum.photos/seed/ss2/1600/900';" src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1600&auto=format&fit=crop" alt="Promo 2">
+              <img class="slider-img absolute inset-0 w-full h-full object-cover opacity-0" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='https://picsum.photos/seed/ss3/1600/900';" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1600&auto=format&fit=crop" alt="Promo 3">
+              <img class="slider-img absolute inset-0 w-full h-full object-cover opacity-0" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='https://picsum.photos/seed/ss4/1600/900';" src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=1600&auto=format&fit=crop" alt="Promo 4">
+            </div>
+            <button id="prevSlide" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow">◀</button>
+            <button id="nextSlide" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow">▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Special Offers -->
+  <section id="offers" class="bg-white dark:bg-slate-900">
+    <div class="container mx-auto px-4 py-10">
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="text-2xl md:text-3xl font-extrabold">Special Offers</h2>
+        <div class="flex items-center gap-2">
+          <button id="offerPrev" class="p-2 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-800" aria-label="Previous Offer">◀</button>
+          <button id="offerNext" class="p-2 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-800" aria-label="Next Offer">▶</button>
+        </div>
+      </div>
+      <div class="mt-6 relative overflow-hidden rounded-xl border">
+        <div id="offersTrack" class="flex transition-transform duration-500 ease-out"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section id="products" class="bg-slate-50 dark:bg-slate-900">
+    <div class="container mx-auto px-4 py-10">
+      <div class="flex items-end justify-between gap-4">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-extrabold">Popular Products</h2>
+          <p class="text-slate-600">Hand-picked items from the Fake Store API</p>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap justify-end">
+          <input id="searchInput" type="text" placeholder="Search products..." class="px-3 py-2 border rounded-lg w-40 md:w-56" />
+          <select id="categorySelect" class="px-3 py-2 border rounded-lg">
+            <option value="all">All categories</option>
+          </select>
+          <label for="sortSelect" class="text-sm text-slate-600">Sort</label>
+          <select id="sortSelect" class="px-3 py-2 border rounded-lg">
+            <option value="default">Default</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating-desc">Rating: High to Low</option>
+          </select>
+        </div>
+      </div>
+      <div id="categoryButtons" class="mt-3 flex flex-wrap gap-2"></div>
+      <div id="productsGrid" class="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"></div>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section id="reviews" class="bg-white dark:bg-slate-900">
+    <div class="container mx-auto px-4 py-10">
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="text-2xl md:text-3xl font-extrabold">What our customers say</h2>
+        <div class="flex items-center gap-2">
+          <button id="revPrev" class="p-2 rounded-lg border hover:bg-slate-50" aria-label="Previous Review">◀</button>
+          <button id="revNext" class="p-2 rounded-lg border hover:bg-slate-50" aria-label="Next Review">▶</button>
+        </div>
+      </div>
+      <div class="mt-6">
+        <div class="relative overflow-hidden">
+          <div id="reviewsTrack" class="flex transition-transform duration-500 ease-out"></div>
+        </div>
+        <div id="reviewsDots" class="mt-4 flex items-center justify-center gap-2"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us -->
+  <section id="about" class="bg-white dark:bg-slate-900">
+    <div class="container mx-auto px-4 py-10">
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-extrabold">About Smart Shop</h2>
+          <p class="mt-3 text-slate-600 dark:text-slate-300">Smart Shop is a modern e-commerce concept focused on curated products, fair pricing, and delightful shopping experiences. Our mission is simple: make shopping smarter with transparency, speed, and service.</p>
+          <p class="mt-3 text-slate-600 dark:text-slate-300">Mission: Deliver quality products with fast delivery, easy returns, and a user-friendly experience for everyone.</p>
+        </div>
+        <div>
+          <img src="https://images.unsplash.com/photo-1515165562835-c3b8c0f0b090?q=80&w=1600&auto=format&fit=crop" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='https://picsum.photos/seed/team/1200/400';" alt="Team working" class="rounded-xl shadow-lg object-cover w-full h-64">
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <h3 class="text-xl font-bold">Our Team</h3>
+        <div class="mt-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="rounded-xl border bg-white dark:bg-slate-900 p-4 shadow-sm">
+            <div class="font-semibold">Sayed Mahamod Twki</div>
+            <div class="text-sm text-slate-600 dark:text-slate-400">Project Lead</div>
+          </div>
+          <div class="rounded-xl border bg-white dark:bg-slate-900 p-4 shadow-sm">
+            <div class="font-semibold">Rakibul Islam Fahim</div>
+            <div class="text-sm text-slate-600 dark:text-slate-400">Frontend Engineer</div>
+          </div>
+          <div class="rounded-xl border bg-white dark:bg-slate-900 p-4 shadow-sm">
+            <div class="font-semibold">Junied Al khan</div>
+            <div class="text-sm text-slate-600 dark:text-slate-400">UI/UX Designer</div>
+          </div>
+          <div class="rounded-xl border bg-white dark:bg-slate-900 p-4 shadow-sm">
+            <div class="font-semibold">Mehedi Hasan</div>
+            <div class="text-sm text-slate-600 dark:text-slate-400">QA & Support</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="bg-slate-50 dark:bg-slate-900">
+    <div class="container mx-auto px-4 py-10">
+      <h2 class="text-2xl md:text-3xl font-extrabold">Contact us</h2>
+      <p class="mt-2 text-slate-600">Have questions? Reach out and we'll get back to you soon.</p>
+      <form id="contactForm" class="mt-6 grid md:grid-cols-2 gap-4" novalidate>
+        <input id="contactName" type="text" placeholder="Your name" class="px-4 py-3 rounded-lg border">
+        <input id="contactEmail" type="email" placeholder="Your email" class="px-4 py-3 rounded-lg border">
+        <textarea id="contactMessage" placeholder="Message" class="md:col-span-2 px-4 py-3 rounded-lg border h-28"></textarea>
+        <div id="contactFeedback" class="md:col-span-2 text-sm"></div>
+        <button id="contactSubmit" type="submit" class="md:col-span-2 inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-primary text-white hover:bg-primary/90">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Cart Drawer -->
+  <div id="cartDrawer" class="fixed inset-0 z-[60] hidden">
+    <div id="cartBackdrop" class="absolute inset-0 bg-black/40"></div>
+    <aside class="absolute right-0 top-0 h-full w-full max-w-md bg-white dark:bg-slate-900 shadow-xl flex flex-col">
+      <div class="flex items-center justify-between p-4 border-b">
+        <h3 class="text-lg font-bold">Your Cart</h3>
+        <button id="closeCart" class="p-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Close Cart">✕</button>
+      </div>
+      <div id="cartItems" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+      <div class="border-t p-4 space-y-3">
+        <div class="flex items-center gap-2">
+          <input id="couponInput" type="text" placeholder="Coupon code (SMART10)" class="flex-1 px-3 py-2 border rounded-lg dark:bg-slate-800 dark:border-slate-700">
+          <button id="applyCoupon" class="px-3 py-2 rounded-lg bg-slate-900 text-white hover:bg-slate-800">Apply</button>
+        </div>
+        <p id="couponMsg" class="text-sm text-slate-600"></p>
+        <div class="text-sm space-y-1">
+          <div class="flex justify-between"><span>Balance</span><span id="balanceInline">$0.00</span></div>
+          <div class="flex justify-between"><span>Subtotal</span><span id="subtotal">$0.00</span></div>
+          <div class="flex justify-between"><span>Delivery</span><span id="delivery">$0.00</span></div>
+          <div class="flex justify-between"><span>Shipping</span><span id="shipping">$0.00</span></div>
+          <div class="flex justify-between text-green-700"><span>Discount</span><span id="discount">-$0.00</span></div>
+          <div class="flex justify-between font-bold text-lg border-t pt-2"><span>Total</span><span id="total">$0.00</span></div>
+          <div class="flex justify-between"><span>Remaining</span><span id="remaining">$0.00</span></div>
+          <p id="balanceWarn" class="text-sm text-red-600"></p>
+        </div>
+        <button class="w-full mt-2 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-primary text-white hover:bg-primary/90">Checkout</button>
+      </div>
+    </aside>
+  </div>
+
+  <footer class="border-t bg-white dark:bg-slate-900">
+    <div class="container mx-auto px-4 py-8 grid md:grid-cols-3 gap-6 text-sm text-slate-600 dark:text-slate-300">
+      <div>
+        <div class="font-bold text-slate-800 dark:text-slate-100">Smart Shop</div>
+        <p class="mt-2">Email: support@smartshop.example</p>
+        <p>Phone: +880-1234-567890</p>
+        <p>Address: Chittagong, Bangladesh</p>
+      </div>
+      <div>
+        <div class="font-bold text-slate-800 dark:text-slate-100">Quick Links</div>
+        <ul class="mt-2 space-y-1">
+          <li><a href="#home" class="hover:text-primary">Home</a></li>
+          <li><a href="#products" class="hover:text-primary">Products</a></li>
+          <li><a href="#reviews" class="hover:text-primary">Reviews</a></li>
+          <li><a href="#about" class="hover:text-primary">About</a></li>
+          <li><a href="#contact" class="hover:text-primary">Contact</a></li>
+        </ul>
+      </div>
+      <div class="flex md:justify-end items-start">
+        <button id="backToTop" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-800" aria-label="Back to Top">▲ Back to Top</button>
+      </div>
+    </div>
+    <div class="border-t text-xs text-slate-500 dark:text-slate-400">
+      <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+        <div>© <span id="year"></span> Smart Shop</div>
+        <div>Built with Tailwind CSS</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>

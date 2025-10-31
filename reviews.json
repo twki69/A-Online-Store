@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Ayesha Khan",
+    "comment": "Fantastic experience! The products arrived quickly and the quality exceeded my expectations.",
+    "rating": 4.8,
+    "date": "2025-09-12"
+  },
+  {
+    "name": "Rahim Uddin",
+    "comment": "Great prices and smooth checkout. Customer service was helpful with my query.",
+    "rating": 4.6,
+    "date": "2025-08-30"
+  },
+  {
+    "name": "Sara Ahmed",
+    "comment": "Loved the variety. The item matched the description and photos perfectly.",
+    "rating": 4.7,
+    "date": "2025-08-10"
+  },
+  {
+    "name": "Mehedi Hasan",
+    "comment": "Nice UI and easy to find what I need. Shipping was faster than expected.",
+    "rating": 4.5,
+    "date": "2025-07-22"
+  },
+  {
+    "name": "Nadia Akter",
+    "comment": "Applied SMART10 and saved extra! Will shop here again.",
+    "rating": 4.9,
+    "date": "2025-07-05"
+  }
+]
